@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_present"
+            android:icon="@drawable/pesent_icon"
+            android:title="PRESENT" />
+        <item
+            android:id="@+id/nav_absent"
+            android:icon="@drawable/absent_icon"
+            android:title="ABSENT" />
+        <item
+            android:id="@+id/nav_barred"
+            android:icon="@drawable/other_icon"
+            android:title="BARRED" />
+        <item
+            android:id="@+id/nav_exempted"
+            android:icon="@drawable/other_icon"
+            android:title="EXEMPTED" />
+        <item
+            android:id="@+id/nav_quarantined"
+            android:icon="@drawable/other_icon"
+            android:title="QUARANTINED" />
+    </group>
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_animation"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="ANIMATION ACT" />
+    </group>
+
+</menu>
