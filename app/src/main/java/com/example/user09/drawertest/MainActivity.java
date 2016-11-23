@@ -15,17 +15,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
-
     private FloatingActionButton fab;
+    private Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("My Title");
+        toolbar.setLogo(R.drawable.ic_menu_camera);
+        toolbar.setSubtitle("Attendance List");
         setSupportActionBar(toolbar);
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -75,6 +80,13 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Toast.makeText(this, "Setting Checked", Toast.LENGTH_LONG).show();
+            return true;
+        }
+
+        if(id == R.id.action_thing) {
+            Toast.makeText(this, "Thing Checked", Toast.LENGTH_LONG).show();
+            toolbar.setSubtitle("WOW");
             return true;
         }
 

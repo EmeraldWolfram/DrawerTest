@@ -29,14 +29,15 @@ public class FragmentA extends Fragment {
 
     private RecyclerView recyclerView;
     private MyAdapter adapter;
-    //private AlertDialog.Builder alertDialog;
-    //private EditText et_country;
-    //private int edit_position;
-    private Paint p = new Paint();
+    private Paint p;
+    private Bitmap iconA;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        p = new Paint();
+
+
     }
 
     @Nullable
@@ -44,11 +45,16 @@ public class FragmentA extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view   =  inflater.inflate(R.layout.fragment_absent, null);
 
+        iconA   = BitmapFactory.decodeResource(getResources(), R.drawable.trash_icon);
+        if(iconA == null) {
+            Toast.makeText(getContext(), "Icon is Null", Toast.LENGTH_LONG).show();
+        }
+
         recyclerView    = (RecyclerView) view.findViewById(R.id.recyclerView);
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new MyAdapter(new String[]{"A", "B", "C", "D"});
+        adapter = new MyAdapter(new String[]{"E", "B", "C", "D"});
         recyclerView.setAdapter(adapter);
         initSwipe();
         return view;
@@ -65,23 +71,20 @@ public class FragmentA extends Fragment {
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 int position = viewHolder.getAdapterPosition();
-                adapter.removeItem(position);
-                /*if (direction == ItemTouchHelper.LEFT){
+                //adapter.removeItem(position);
+                if (direction == ItemTouchHelper.LEFT){
                     adapter.removeItem(position);
                 } else {
-                    //removeView();
-                    //edit_position = position;
-                    //alertDialog.setTitle("Edit Country");
-                    //et_country.setText(countries.get(position));
-                    //alertDialog.show();
-                }*/
+                    adapter.addItem("New Entry");
+                }
             }
 
             @Override
             public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
 
-                Bitmap icon;
+
                 if(actionState == ItemTouchHelper.ACTION_STATE_SWIPE){
+
 
                     View itemView = viewHolder.itemView;
                     float height = (float) itemView.getBottom() - (float) itemView.getTop();
@@ -91,17 +94,25 @@ public class FragmentA extends Fragment {
                         p.setColor(Color.parseColor("#388E3C"));
                         RectF background = new RectF((float) itemView.getLeft(), (float) itemView.getTop(), dX,(float) itemView.getBottom());
                         c.drawRect(background,p);
-                        icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_menu_camera);
-                        RectF icon_dest = new RectF((float) itemView.getLeft() + width ,(float) itemView.getTop() + width,(float) itemView.getLeft()+ 2*width,(float)itemView.getBottom() - width);
-                        c.drawBitmap(icon,null,icon_dest,p);
+                        RectF icon_dest = new RectF(
+                                (float) itemView.getLeft() + width,
+                                (float) itemView.getTop() + width,
+                                (float) itemView.getLeft() + 2*width,
+                                (float)itemView.getBottom() - width);
+
+                        c.drawBitmap(iconA, null,icon_dest,p);
                     } else {
                         p.setColor(Color.parseColor("#D32F2F"));
                         RectF background = new RectF((float) itemView.getRight() + dX, (float) itemView.getTop(),(float) itemView.getRight(), (float) itemView.getBottom());
                         c.drawRect(background,p);
-                        icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_menu_share);
-                        RectF icon_dest = new RectF((float) itemView.getRight() - 2*width ,(float) itemView.getTop() + width,(float) itemView.getRight() - width,(float)itemView.getBottom() - width);
-                        c.drawBitmap(icon,null,icon_dest,p);
+                        RectF icon_dest = new RectF(
+                                (float) itemView.getRight() - 2*width ,
+                                (float) itemView.getTop() + width,
+                                (float) itemView.getRight() - width,
+                                (float)itemView.getBottom() - width);
+                        c.drawBitmap(iconA, null, icon_dest,p);
                     }
+
                 }
                 super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
             }
@@ -165,6 +176,8 @@ public class FragmentA extends Fragment {
         public void addItem(String item){
             myDataList.add(item);
             notifyItemInserted(myDataList.size());
+            notifyDataSetChanged();
+            //notifyItemRangeInserted(0, myDataList.size());
         }
 
         public String removeItem(int position){

@@ -23,6 +23,9 @@ public class AnimationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_animation);
 
+        getSupportActionBar().setTitle("My own title");
+        getSupportActionBar().setSubtitle("Something in subtitle");
+
         text1   = (TextView) findViewById(R.id.text1);
         text2   = (TextView) findViewById(R.id.text2);
 
